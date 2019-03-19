@@ -23,7 +23,7 @@ void limpaTela(){
 }
 
 void tempoEspera(int tempo){
-    sleep(tempo);
+    //sleep(tempo);
 }
 
 
@@ -32,9 +32,9 @@ void desenhaMatriz(struct itensDaMatriz **matrizGeral,int dimMatrizX, int dimMat
     for(int i=0;i<dimMatrizX;i++){
         for(int j=0;j<dimMatrizY;j++){
             if(j!=dimMatrizY-1)
-                printf(" %d -",matrizGeral[i][j].numBombasProximas);
+                printf(" %d -",matrizGeral[i][j].temBomba);
             else
-                printf(" %d\n",matrizGeral[i][j].numBombasProximas);
+                printf(" %d\n",matrizGeral[i][j].temBomba);
 
         }
     }
@@ -101,8 +101,10 @@ void colocarBombas (struct itensDaMatriz **matrizGeral, int numBombas, int dimMa
             posicoesBombas[i][1] = rand()%dimMatrizY;
             aux=1;
             for (int j=0; j<i; j++){
-                if(posicoesBombas[i][0] == posicoesBombas[j][0] && posicoesBombas[i][1] == posicoesBombas[j][1])
+                if(posicoesBombas[i][0] == posicoesBombas[j][0] && posicoesBombas[i][1] == posicoesBombas[j][1]){
                     aux=0;
+                    break;
+                }
             }
         }//while
 
@@ -188,24 +190,77 @@ void colocarNumeros (struct itensDaMatriz **matrizGeral, int dimMatrizX, int dim
 }
 
 
+void perderJogo(int situacao){
+// situacao
+// 0 - Avisar a funcao que perdeu
+// 1 - Mostrar que perdeu na tela (após atualizar a tela
 
+    static int a=0;
+    char jogarDeNovo;
 
+    if(situacao==0){
+        a=1;
+    }
+    if(situacao==1 && a==1){
+        printf("Voce Perdeu... Deseja jogar novamente? (s/n)");
+        fflush(stdin);
+        scanf("%c",&jogarDeNovo);
+    }
 
-void iinterface(struct itensDaMatriz **matrizGeral, int dimMatrizX, int dimMatrizY){
-
-    limpaTela();
-
-    printf("Teclas\n");
-    printf("W - cima\n");
-    printf("A - Esquerda\n");
-    printf("S - Baixo\n");
-    printf("D - Direita\n");
-    printf("E - Selecionar\n");
-    //printf("Q - Marcar/Desmarcar Bandeira");
 
 
 
 }
+
+
+void revelarZerosProximos(struct itensDaMatriz** matrizGeral, int dimMatrizX, int dimMatrizY, int posicaoAsterisco[2]){
+
+    for(int i=0; i<dimMatrizX;i++){
+        for(int j=0; j<dimMatrizY;j++)
+
+    }
+
+
+
+
+
+
+
+
+
+
+}
+
+
+void selecionar(struct itensDaMatriz** matrizGeral, int dimMatrizX, int dimMatrizY, int posicaoAsterisco[2]){
+
+    int a=posicaoAsterisco[0];
+    int b=posicaoAsterisco[1];
+
+   if(matrizGeral[a][b].foiSelecionado==1){
+    //None
+   }
+   else{
+        matrizGeral[a][b].foiSelecionado=1;
+        if(matrizGeral[a][b].temBomba==1){
+            //Perder o Jogo
+        }
+        if(matrizGeral[a][b].numBombasProximas==0){
+            //Revelar Todos os Zeros em volta
+        }
+   }
+
+
+
+
+
+
+
+
+
+
+}
+
 
 
 
@@ -223,26 +278,46 @@ void acaoJogo(struct itensDaMatriz** matrizGeral, int dimMatrizX, int dimMatrizY
 
         case 'W':
             if(posicaoAsterisco[0]!=0)
-                posicaoAsterisco[0]++;
+                posicaoAsterisco[0]--;
             break;
 
         case 'S':
-            if(posicaoAsterisco[0]!=dimMatrizY)
-                posicaoAsterisco[0]--;
+            if(posicaoAsterisco[0]!=dimMatrizY-1)
+                posicaoAsterisco[0]++;
             break;
         case 'A':
             if(posicaoAsterisco[1]!=0)
                 posicaoAsterisco[1]--;
             break;
         case 'D':
-            if(posicaoAsterisco[1]!=dimMatrizX)
+            if(posicaoAsterisco[1]!=dimMatrizX-1)
                 posicaoAsterisco[1]++;
             break;
         case 'E':
-            //colocar para selecionar o local
+            selecionar(matrizGeral,dimMatrizX,dimMatrizY,posicaoAsterisco);
+            break;
+        case 'w':
+            if(posicaoAsterisco[0]!=0)
+                posicaoAsterisco[0]--;
+            break;
+
+        case 's':
+            if(posicaoAsterisco[0]!=dimMatrizX-1)
+                posicaoAsterisco[0]++;
+            break;
+        case 'a':
+            if(posicaoAsterisco[1]!=0)
+                posicaoAsterisco[1]--;
+            break;
+        case 'd':
+            if(posicaoAsterisco[1]!=dimMatrizY-1)
+                posicaoAsterisco[1]++;
+            break;
+        case 'e':
+            selecionar(matrizGeral,dimMatrizX,dimMatrizY,posicaoAsterisco);
             break;
         default:
-            //mensagem de erro
+            printf("Digite uma opcao valida.");
             break;
 
 
@@ -252,7 +327,7 @@ void acaoJogo(struct itensDaMatriz** matrizGeral, int dimMatrizX, int dimMatrizY
 
     }
 
-    printf("Posicao Ast Dps: %d e %d", posicaoAsterisco[0],posicaoAsterisco[1]);
+    //printf("Posicao Ast Dps: %d e %d", posicaoAsterisco[0],posicaoAsterisco[1]);
     a=posicaoAsterisco[0];
     b=posicaoAsterisco[1];
     matrizGeral[a][b].asterisco = 1;
@@ -306,8 +381,10 @@ void interface(struct itensDaMatriz** matrizGeral, int dimMatrizX, int dimMatriz
                 else{
                     if(matrizGeral[i][j].numBombasProximas==0)
                         printf("   ");
+                    else if(matrizGeral[i][j].temBomba==1)
+                        printf(" B ");
                     else
-                        printf("%d", matrizGeral[i][j].numBombasProximas);
+                        printf(" %d ", matrizGeral[i][j].numBombasProximas);
                 }
             }//asterisco==0
 
@@ -317,9 +394,11 @@ void interface(struct itensDaMatriz** matrizGeral, int dimMatrizX, int dimMatriz
                     printf(" -*");
                 else{
                     if(matrizGeral[i][j].numBombasProximas==0)
-                        printf("   ");
+                        printf("  *");
+                    else if(matrizGeral[i][j].temBomba==1)
+                        printf(" B*");
                     else
-                        printf("%d", matrizGeral[i][j].numBombasProximas);
+                        printf(" %d*", matrizGeral[i][j].numBombasProximas);
                 }
             }//asterisco==1
 
@@ -336,6 +415,7 @@ void interface(struct itensDaMatriz** matrizGeral, int dimMatrizX, int dimMatriz
 
     acaoJogo(matrizGeral,dimMatrizX,dimMatrizY,acao,posicaoAsteristico);
     tempoEspera(3);
+    //Verificar se ganhou o jogo
 
 
 
@@ -363,10 +443,12 @@ void main(){
     colocarNumeros(matrizGeral,dimMatrizX,dimMatrizY);
 
 
-    for(int i=0;i<2;i++)
+
+    while (1)
         interface(matrizGeral,dimMatrizX,dimMatrizY,posicaoAsteristico);
     //desenhaMatriz(matrizGeral,dimMatrizX,dimMatrizY);
 
 
 }
-
+    
+                    
