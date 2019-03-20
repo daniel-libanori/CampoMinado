@@ -227,12 +227,7 @@ while(sair==0){
     for (int i=0;i<dimMatrizY;i++){//direita
         for(int j=0;j<dimMatrizX;j++){
             if(j!=dimMatrizX-1)
-                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i][j+1].numBombasProximas!=0 && matrizGeral[i][j+1].foiSelecionado==0){
-                    matrizGeral[i][j+1].foiSelecionado=1;
-                    sair=0;
-                }
-
-                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i][j+1].numBombasProximas==0 && matrizGeral[i][j+1].foiSelecionado==0){
+                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i][j+1].foiSelecionado==0){
                     matrizGeral[i][j+1].foiSelecionado=1;
                     sair=0;
                 }
@@ -242,7 +237,7 @@ while(sair==0){
     for (int i=0;i<dimMatrizY;i++){//esquerda
         for(int j=dimMatrizX-1;j>0;j--){
             if(j!=0)
-                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i][j-1].numBombasProximas==0 && matrizGeral[i][j-1].foiSelecionado==0){
+                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i][j-1].foiSelecionado==0){
                     matrizGeral[i][j-1].foiSelecionado=1;
                     sair=0;
                 }
@@ -253,7 +248,7 @@ while(sair==0){
     for (int i=0;i<dimMatrizY;i++){//baixo
         for(int j=0;j<dimMatrizX;j++){
             if(i!=dimMatrizY-1)
-                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i+1][j].numBombasProximas==0 && matrizGeral[i+1][j].foiSelecionado==0){
+                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i+1][j].foiSelecionado==0){
                     matrizGeral[i+1][j].foiSelecionado=1;
                     sair=0;
                 }
@@ -261,8 +256,8 @@ while(sair==0){
     }
     for (int i=dimMatrizY-1;i>0;i--){//cima
         for(int j=0;j<dimMatrizX;j++){
-            if(j!=0)
-                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i-1][j].numBombasProximas==0 && matrizGeral[i-1][j].foiSelecionado==0){
+            if(i!=0)
+                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i-1][j].foiSelecionado==0){
                     matrizGeral[i-1][j].foiSelecionado=1;
                     sair=0;
                 }
@@ -270,6 +265,53 @@ while(sair==0){
         }
     }
 
+    
+    for (int i=0;i<dimMatrizY;i++){//baixo-direita
+        for(int j=0;j<dimMatrizX;j++){
+            if(j!=dimMatrizX-1 && i!=dimMatrizY-1)
+                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i+1][j+1].foiSelecionado==0){
+                    matrizGeral[i+1][j+1].foiSelecionado=1;
+                    sair=0;
+                }
+
+        }
+    }
+    
+    for (int i=0;i<dimMatrizY;i++){//baixo-esquerda
+        for(int j=dimMatrizX-1;j>0;j--){
+            if(j!=0 && i!=dimMatrizY-1)
+                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i+1][j-1].foiSelecionado==0){
+                    matrizGeral[i+1][j-1].foiSelecionado=1;
+                    sair=0;
+                }
+
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
 
