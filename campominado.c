@@ -220,358 +220,60 @@ void revelarZerosProximos(struct itensDaMatriz** matrizGeral, int dimMatrizX, in
     int b = posicaoAsterisco[1];
     int sair=0, aux=0;
 
-    int c=0;
-    int posicoesZeros[dimMatrizX*dimMatrizY][2];
+while(sair==0){
 
-    for(int i=0;i<dimMatrizX*dimMatrizY;i++){
-        posicoesZeros[i][0]=-1;
-        posicoesZeros[i][1]=-1;
-    }
+    sair=1;
 
-
-    /*if(a!=0)
-        if(matrizGeral[a-1][b].numBombasProximas==0)//esq
-            matrizGeral[a-1][b].foiSelecionado=1;
-    if(a!=0 && b!=dimMatrizY-1)
-        if(matrizGeral[a-1][b+1].numBombasProximas==0)//esqbaixo
-            matrizGeral[a-1][b+1].foiSelecionado=1;
-    if(b!=dimMatrizY-1)
-        if(matrizGeral[a][b+1].numBombasProximas==0)//baixo
-            matrizGeral[a][b+1].foiSelecionado=1;
-    if(a!=dimMatrizX-1 && b!=dimMatrizY-1)
-        if(matrizGeral[a+1][b+1].numBombasProximas==0)//baixodir
-            matrizGeral[a+1][b+1].foiSelecionado=1;
-    if(a!=dimMatrizX-1)
-        if(matrizGeral[a+1][b].numBombasProximas==0)//dir
-            matrizGeral[a+1][b].foiSelecionado=1;
-    if(a!=dimMatrizX && b!=0)
-        if(matrizGeral[a+1][b-1].numBombasProximas==0)//cimdir
-            matrizGeral[a+1][b-1].foiSelecionado=1;
-    if(b!=0)
-        if(matrizGeral[a][b-1].numBombasProximas==0)//cim
-            matrizGeral[a][b-1].foiSelecionado=1;
-    if(a!=0 && b!=0)
-        if(matrizGeral[a-1][b-1].numBombasProximas==0)
-            matrizGeral[a-1][b-1].foiSelecionado=1;*/
-
-
-
-   // for(int i=0; i<dimMatrizX;i++){
-    //    for(int j=0;j<dimMatrizY;j++){
-
-            if(b!=dimMatrizX && matrizGeral[a][b+1].foiSelecionado==0){
-                matrizGeral[a][b+1].foiSelecionado=1;
-                if(matrizGeral[a][b+1].numBombasProximas==0){
-                    posicoesZeros[c][0]=a;
-                    posicoesZeros[c][1]=b+1;
-                    c++;
-                }
-            }
-
-            if(a!=dimMatrizY && matrizGeral[a+1][b].foiSelecionado==0){
-                matrizGeral[a+1][b].foiSelecionado=1;
-                if(matrizGeral[a+1][b].numBombasProximas==0){
-                    posicoesZeros[c][0]=a+1;
-                    posicoesZeros[c][1]=b;
-                    c++;
-            }
-
-            if(b!=0 && matrizGeral[a][b-1].foiSelecionado==0){
-                matrizGeral[a][b-1].foiSelecionado=1;
-                if(matrizGeral[a][b-1].numBombasProximas==0){
-                    posicoesZeros[c][0]=a;
-                    posicoesZeros[c][1]=b-1;
-                    c++;
-            }
-            if(a!=0 && matrizGeral[a-1][b].foiSelecionado==0){
-                matrizGeral[a-1][b].foiSelecionado=1;
-                if(matrizGeral[a-1][b].numBombasProximas==0){
-                    posicoesZeros[c][0]=a-1;
-                    posicoesZeros[c][1]=b;
-                    c++;
-            }
-
-
-
-   //    }
-   // }
-
-
-
-
-
-
-    /*while(sair==0){
-        sair=1;
-
-        for(int i=0;i<dimMatrizX;i++){
-
-            for(int j=0;j<dimMatrizY;j++){
-                if( matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i][j].numBombasProximas==0){
-                    if(i!=0 && matrizGeral[i-1][j].numBombasProximas==0 && matrizGeral[i-1][j].zeroBombasProximas==0){//esquerda
-                        if(matrizGeral[i-1][j].foiSelecionado!=0)
-                            sair=0;
-
-                        matrizGeral[i-1][j].foiSelecionado=1;
-                        }
-
-                        if(i!=0 && b!=dimMatrizY-1 && matrizGeral[i-1][j+1].numBombasProximas==0 && matrizGeral[i-1][j+1].zeroBombasProximas==0){//baixo esquerda
-                            if(matrizGeral[i-1][j+1].foiSelecionado!=0)
-                                sair=0;
-                            matrizGeral[i-1][j+1].foiSelecionado=1;
-                        }
-
-                        if(j!=dimMatrizY-1 && matrizGeral[i][j+1].numBombasProximas==0 && matrizGeral[i][j+1].zeroBombasProximas==0){//baixo
-                            if(matrizGeral[i][j+1].foiSelecionado!=0)
-                                sair=0;
-                            matrizGeral[i][j+1].foiSelecionado=1;
-                        }
-
-                        if(j!=dimMatrizX-1 && j!=dimMatrizY-1 && matrizGeral[i+1][j+1].numBombasProximas==0 && matrizGeral[i+1][j+1].zeroBombasProximas==0){//baixo direita
-                            if(matrizGeral[i+1][j+1].foiSelecionado!=0)
-                                sair=0;
-                            matrizGeral[i+1][j+1].foiSelecionado=1;
-                        }
-
-                        if(i!=dimMatrizX-1 && matrizGeral[i+1][j].numBombasProximas==0 && matrizGeral[i+1][j].zeroBombasProximas==0){//direita
-                            if(matrizGeral[i+1][j].foiSelecionado!=0)
-                                sair=0;
-                            matrizGeral[i+1][j].foiSelecionado=1;
-                        }
-
-                        if(i!=dimMatrizX-1 && j!=0 && matrizGeral[i+1][j-1].numBombasProximas==0 && matrizGeral[i+1][j-1].zeroBombasProximas==0){//cima direita
-                            if(matrizGeral[i+1][j-1].foiSelecionado!=0)
-                                sair=0;
-                            matrizGeral[i+1][j-1].foiSelecionado=1;
-                        }
-
-                        if(j!=0 && matrizGeral[i][j-1].numBombasProximas==0 && matrizGeral[i][j-1].zeroBombasProximas==0){//cima
-                            if(matrizGeral[i][j-1].foiSelecionado!=0)
-                                sair=0;
-                            matrizGeral[i][j-1].foiSelecionado=1;
-                        }
-
-                        if(i!=0 && j!=0 && matrizGeral[i-1][j-1].numBombasProximas==0 && matrizGeral[i-1][j-1].zeroBombasProximas==0){//cima esquerda
-                            if(matrizGeral[i-1][j-1].foiSelecionado!=0)
-                                sair=0;
-                            matrizGeral[i-1][j-1].foiSelecionado=1;
-                        }
+    for (int i=0;i<dimMatrizY;i++){//direita
+        for(int j=0;j<dimMatrizX;j++){
+            if(j!=dimMatrizX-1)
+                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i][j+1].numBombasProximas!=0 && matrizGeral[i][j+1].foiSelecionado==0){
+                    matrizGeral[i][j+1].foiSelecionado=1;
+                    sair=0;
                 }
 
-
-
-
-
-
-
-
-
-
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i][j+1].numBombasProximas==0 && matrizGeral[i][j+1].foiSelecionado==0){
+                    matrizGeral[i][j+1].foiSelecionado=1;
+                    sair=0;
+                }
 
         }
+    }
+    for (int i=0;i<dimMatrizY;i++){//esquerda
+        for(int j=dimMatrizX-1;j>0;j--){
+            if(j!=0)
+                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i][j-1].numBombasProximas==0 && matrizGeral[i][j-1].foiSelecionado==0){
+                    matrizGeral[i][j-1].foiSelecionado=1;
+                    sair=0;
+                }
 
-    }//while*/
+        }
+    }
 
+    for (int i=0;i<dimMatrizY;i++){//baixo
+        for(int j=0;j<dimMatrizX;j++){
+            if(i!=dimMatrizY-1)
+                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i+1][j].numBombasProximas==0 && matrizGeral[i+1][j].foiSelecionado==0){
+                    matrizGeral[i+1][j].foiSelecionado=1;
+                    sair=0;
+                }
+        }
+    }
+    for (int i=dimMatrizY-1;i>0;i--){//cima
+        for(int j=0;j<dimMatrizX;j++){
+            if(j!=0)
+                if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].foiSelecionado==1 && matrizGeral[i-1][j].numBombasProximas==0 && matrizGeral[i-1][j].foiSelecionado==0){
+                    matrizGeral[i-1][j].foiSelecionado=1;
+                    sair=0;
+                }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }
+    }
 
 }
 
 
-
-
-/*
-
-
-void revelarZerosProximos(struct itensDaMatriz** matrizGeral, int dimMatrizX, int dimMatrizY, int posicaoAsterisco[2]){
-
-    int sair=0;
-    int aux=1;
-    int a=posicaoAsterisco[0], b=posicaoAsterisco[1];
-
-    //int matrizAbrirZeros[dimMatrizX][dimMatrizY][2];
-    int matrizAbreZeros [dimMatrizX][dimMatrizY];
-    int matrizAbreNumeros [dimMatrizX][dimMatrizY];
-
-    for(int i=0;i<dimMatrizX;i++)
-        for(int j=0;j<dimMatrizY;j++){
-            matrizAbreZeros[i][j]=0;
-            matrizAbreNumeros[i][j]=0;
-
-        }
-
-
-    matrizAbreZeros[a][b]=1;
-
-    //matrizAbrirZeros[0][0][0]=a;
-    //matrizAbrirZeros[0][0][1]=b;
-
-    while(sair==0){
-        sair=1;
-
-
-        for(int i=0; i<dimMatrizX;i++){
-            for(int j=0; j<dimMatrizY;j++){
-                a=i;
-                b=j;
-                if(a!=0 && matrizGeral[a-1][b].numBombasProximas==0 && matrizGeral[a-1][b].zeroBombasProximas==0 && matrizGeral[a-1][b].foiSelecionado!=0){//esquerda
-                    matrizGeral[a-1][b].foiSelecionado=1;
-                    matrizAbreZeros[a-1][b]=1;
-                    sair=0;
-                    //if(a-1>0 && matrizGeral[a-2][b].numBombasProximas>0)//esquerda-esquerda
-                        //matrizGeral[a-2][b].foiSelecionado=1;
-                }
-
-                if(a!=0 && b!=dimMatrizY-1 && matrizGeral[a-1][b+1].numBombasProximas==0 && matrizGeral[a-1][b+1].zeroBombasProximas==0 && matrizGeral[a-1][b+1].foiSelecionado!=0){//baixo esquerda
-                    matrizGeral[a-1][b+1].foiSelecionado=1;
-                    matrizAbreZeros[a-1][b+1]=1;
-                    sair=0;
-                    //if(a-1>0 && b+1<dimMatrizY-1 && matrizGeral[a-2][b+2].numBombasProximas>0)//Esquerda-Baixo-Esquerda Baixo
-                    //    matrizGeral[a-2][b+2].foiSelecionado=1;
-
-                    //if(a-1>0 && b<dimMatrizY-1 && matrizGeral[a-2][b+1].numBombasProximas>0)//Esquerda-Baixo-Esquerda
-                    //    matrizGeral[a-2][b+1].foiSelecionado=1;
-
-                    //if(a>0 && b+1<dimMatrizY-1 && matrizGeral[a-1][b+2].numBombasProximas>0)//Esquerda-Baixo-Baixo
-                    //    matrizGeral[a-1][b+2].foiSelecionado=1;
-
-                }
-
-                if(b!=dimMatrizY-1 && matrizGeral[a][b+1].numBombasProximas==0 && matrizGeral[a][b+1].zeroBombasProximas==0 && matrizGeral[a][b+1].foiSelecionado!=0){//baixo
-                    matrizGeral[a][b+1].foiSelecionado=1;
-                    matrizAbreZeros[a][b+1]=1;
-                    sair=0;
-                    //if(b+1<dimMatrizY-1 && matrizGeral[a][b+2].numBombasProximas>0)//Baixo-Baixo
-                    //    matrizGeral[a][b+2].foiSelecionado=1;
-
-                }
-
-                if(a!=dimMatrizX-1 && b!=dimMatrizY-1 && matrizGeral[a+1][b+1].numBombasProximas==0 && matrizGeral[a+1][b+1].zeroBombasProximas==0 && matrizGeral[a+1][b+1].foiSelecionado!=0){//baixo direita
-                    matrizGeral[a+1][b+1].foiSelecionado=1;
-                    matrizAbreZeros[a+1][b+1]=1;
-                    sair=0;
-                    //if(a+1<dimMatrizX-1 && b+1<dimMatrizY-1 && matrizGeral[a+2][b+2].numBombasProximas>0)//Baixo-Direita-baixo-direita
-                    //    matrizGeral[a+2][b+2].foiSelecionado=1;
-                    //if(a+1<dimMatrizX-1 && matrizGeral[a+2][b+1].numBombasProximas>0)//Baixo-Direita-direita
-                    //    matrizGeral[a+2][b+1].foiSelecionado=1;
-                    //if(b+1<dimMatrizY-1 && matrizGeral[a+1][b+2].numBombasProximas>0)//Baixo-Direita-baixo
-                    //    matrizGeral[a+1][b+2].foiSelecionado=1;
-
-
-                }
-                if(a!=dimMatrizX-1 && matrizGeral[a+1][b].numBombasProximas==0 && matrizGeral[a+1][b].zeroBombasProximas==0 && matrizGeral[a+1][b].foiSelecionado!=0){//direita
-                    matrizGeral[a+1][b].foiSelecionado=1;
-                    matrizAbreZeros[a+1][b]=1;
-                    sair=0;
-                    //if(a+1<dimMatrizX-1 && matrizGeral[a+2][b].numBombasProximas>0)//direita-direita
-                    //    matrizGeral[a+2][b].foiSelecionado=1;
-                }
-                if(a!=dimMatrizX-1 && b!=0 && matrizGeral[a+1][b-1].numBombasProximas==0 && matrizGeral[a+1][b-1].zeroBombasProximas==0 && matrizGeral[a+1][b-1].foiSelecionado!=0){//cima direita
-                    matrizGeral[a+1][b-1].foiSelecionado=1;
-                    matrizAbreZeros[a+1][b-1]=1;
-                    sair=0;
-                    //if(a+1<dimMatrizX-1 && b-1>0 && matrizGeral[a+2][b-2].numBombasProximas>0)//cima-direita-cima-direita
-                    //    matrizGeral[a+2][b-2].foiSelecionado=1;
-                    //if(a+1<dimMatrizX-1 && matrizGeral[a+2][b-1].numBombasProximas>0)//cima-direita-direita
-                    //    matrizGeral[a+2][b-1].foiSelecionado=1;
-                    //if(b-1>0 && matrizGeral[a+1][b-2].numBombasProximas>0)//cima-direita-cima
-                    //    matrizGeral[a+1][b-2].foiSelecionado=1;
-                }
-
-                if(b!=0 && matrizGeral[a][b-1].numBombasProximas==0 && matrizGeral[a][b-1].zeroBombasProximas==0 && matrizGeral[a][b-1].foiSelecionado!=0){//cima
-                    matrizGeral[a][b-1].foiSelecionado=1;
-                    matrizAbreZeros[a][b-1]=1;
-                    sair=0;
-                    //if(b-1>0 && matrizGeral[a][b-2].numBombasProximas>0)//cima-cima
-                    //    matrizGeral[a][b-2].foiSelecionado=1;
-                }
-                if(a!=0 && b!=0 && matrizGeral[a-1][b-1].numBombasProximas==0 && matrizGeral[a-1][b-1].zeroBombasProximas==0 && matrizGeral[a-1][b-1].foiSelecionado!=0){//cima esquerda
-                    matrizGeral[a-1][b-1].foiSelecionado=1;
-                    matrizAbreZeros[a-1][b-1]=1;
-                    sair=0;
-                    //if(a-1>0 && b-1>0 && matrizGeral[a-2][b-2].numBombasProximas>0)//cima-esquerda-cima-esquerda
-                    //    matrizGeral[a-2][b-2].foiSelecionado=1;
-                    //if(b-1>0 && matrizGeral[a-1][b-2].numBombasProximas>0)//cima-esquerda-cima
-                    //    matrizGeral[a-1][b-2].foiSelecionado=1;
-                    //if(a-1>0 && matrizGeral[a-2][b-1].numBombasProximas>0)//cima-esquerda-esquerda
-                    //    matrizGeral[a-2][b-1].foiSelecionado=1;
-                }
-                matrizGeral[a][b].zeroBombasProximas=1;
-            }//for j
-
-        }//for i
-
-
-    //for(int i=0;i<dimMatrizX;i++)
-        //for(int j=0;j<dimMatrizY;j++){
-            //if(matrizAbreZeros[i][j]==1 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //}
-
-
-
-
-
-    }//while
-
-
-    //for(int i=0;i<dimMatrizX;i++)
-    //    for(int j=0;j<dimMatrizY;j++)
-    //        matrizGeral[i][j].zeroBombasProximas=0;
-
-
-
-
-}*/
-
+}
 
 void selecionar(struct itensDaMatriz** matrizGeral, int dimMatrizX, int dimMatrizY, int posicaoAsterisco[2]){
 
@@ -692,8 +394,14 @@ void interface(struct itensDaMatriz** matrizGeral, int dimMatrizX, int dimMatriz
     printf("\tD - Direita\n");
     printf("\tE - Seleciona\n\n");
 
+    printf("\t\t\t ");
+    for(int i=0;i<dimMatrizX;i++)
+        printf("---");
+
+    printf("\n");
+
     for(int i=0; i<dimMatrizX;i++){
-        printf("\t\t\t");
+        printf("\t\t\t|");
         for(int j=0;j<dimMatrizY;j++){
 
             if(matrizGeral[i][j].asterisco==0){
@@ -726,8 +434,12 @@ void interface(struct itensDaMatriz** matrizGeral, int dimMatrizX, int dimMatriz
 
 
         }//for J
-        printf("\n");
+        printf("|\n");
     }//for i
+    printf("\t\t\t ");
+    for(int i=0;i<dimMatrizX;i++)
+        printf("---");
+
 printf("\n\n");
     desenhaMatriz(matrizGeral,dimMatrizX,dimMatrizY);
     fflush(stdin);
