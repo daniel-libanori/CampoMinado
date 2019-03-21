@@ -3,7 +3,7 @@
 #include <time.h>
 #include <string.h>
 #include <unistd.h>
-#include <conio.h>
+//#include <conio.h>
 
 
 struct itensDaMatriz{
@@ -19,14 +19,15 @@ struct itensDaMatriz{
 };
 
 void limpaTela(){
-    system("cls");
+    //system("cls");
+    system("clear");
 
 }
 
 void lerChar(char *caracter){
-    //scanf("%c",caracter);
+    scanf("%c",caracter);
     //*caracter=getchar();
-    *caracter=getch();
+    //*caracter=getch();
 
 }
 
@@ -63,6 +64,12 @@ void faltaDeMemoria(int *ponteiro){
     }
 }
 
+void liberaAlocacao(int *ponteiro){
+
+
+}
+
+
 void inicializaValoresMatriz(struct itensDaMatriz **matrizGeral, int numColunas, int numLinhas){
 
         for(int i=0; i<numColunas;i++){
@@ -84,14 +91,47 @@ void inicializaValoresMatriz(struct itensDaMatriz **matrizGeral, int numColunas,
 
 void inicio(int *numBombas, int *numColunas, int *numLinhas){
 
-    printf("Defina o numero de colunas da matriz: ");
-    scanf("%d", numLinhas);
-    printf("Defina o numero de linhas da matriz: ");
-    scanf("%d", numColunas);
+    int ok=0;
+    int aux1,aux2;
 
 
-    printf("Defina o numero de bombas do jogo: ");
-    scanf("%d", numBombas);
+    while(ok==0){
+        printf("Defina o numero de colunas da matriz: ");
+        scanf("%d", numLinhas);
+        ok=1;
+        if(*numLinhas<0){
+            printf("\nDigite um valor valido.\n");
+            ok=0;
+        }
+    }
+
+    ok=0;
+    while(ok==0){
+        printf("Defina o numero de linhas da matriz: ");
+        scanf("%d", numColunas);
+        ok=1;
+        if(*numColunas<0){
+            printf("\nDigite um valor valido.\n");
+            ok=0;
+        }
+    }
+    aux1=*numColunas;
+    aux2=*numLinhas;
+
+    ok=0;
+    while(ok==0){
+        printf("Defina o numero de bombas do jogo: ");
+        scanf("%d", numBombas);
+        ok=1;
+        if(*numBombas<0){
+            printf("\nDigite um valor valido.\n");
+            ok=0;
+        }
+        else if(*numBombas>(*numColunas)*(*numLinhas)){
+            printf("\nValor digitado ultrapassa o total de espaços da matriz. Digite outro.\n");
+            ok=0;
+        }
+    }
 
 }
 
@@ -199,37 +239,6 @@ void colocarNumeros (struct itensDaMatriz **matrizGeral, int numColunas, int num
 }
 
 
-void perderJogo(int situacao,int *acabarJogo){
-// situacao
-// 0 - Avisar a funcao que perdeu
-// 1 - Mostrar que perdeu na tela (após atualizar a tela
-
-    static int a=0;
-    char jogarDeNovo;
-
-    if(situacao==0){
-        a=1;
-    }
-    if(situacao==1 && a==1){
-        *acabarJogo=2;
-    }
-
-
-
-
-}
-
-void ganharJogo(struct itensDaMatriz **matrizGeral, int numColunas,int numLinhas, int **acabarJogo){
-
-    int ganhou=1;
-
-    for(int i=0;i<numColunas-1;i++)
-        for(int j=0;j<numLinhas-1;j++);
-
-
-
-
-}
 
 void revelarZerosProximos(struct itensDaMatriz** matrizGeral, int numColunas, int numLinhas, int posicaoAsterisco[2]){
 
@@ -575,10 +584,11 @@ void main(){
 
 
         matrizGeral = (struct itensDaMatriz**)malloc(numColunas * sizeof(struct itensDaMatriz*));
+
         for(int i = 0; i < numColunas; i++){
             matrizGeral[i] = (struct itensDaMatriz*)calloc(numLinhas, sizeof(struct itensDaMatriz));
         }
-
+        faltaDeMemoria(matrizGeral);
         inicializaValoresMatriz(matrizGeral,numColunas,numLinhas);
 
         colocarBombas(matrizGeral,numBombas,numColunas,numLinhas);
@@ -598,7 +608,7 @@ void main(){
 
         tempoEspera(2);
         limpaTela();
-        printf("Deseja jogar novamente? (1-Sim / 0-Nao)\nR: ");
+        printf("\n\nDeseja jogar novamente? (1-Sim / 0-Nao)\nR: ");
         scanf("%d", &jogarDeNovo);
         acabarJogo=0;
         posicaoAsteristico[0]=0;
@@ -606,4 +616,5 @@ void main(){
     }
 
 }
+
 
