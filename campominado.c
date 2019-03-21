@@ -524,11 +524,13 @@ void interface(struct itensDaMatriz** matrizGeral, int numColunas, int numLinhas
         printf("---");
 
     printf("\n\n");
-    desenhaMatriz(matrizGeral,numColunas,numLinhas);
+
+    //desenhaMatriz(matrizGeral,numColunas,numLinhas);
+
     fflush(stdin);
 
-    printf("\n\n%d\n\n",*acabarJogo);
-    printf("ganhar = %d    conta=%d",auxAcabar,(numColunas*numLinhas)-numBombas);
+    //printf("\n\n%d\n\n",*acabarJogo);
+    //printf("ganhar = %d    conta=%d",auxAcabar,(numColunas*numLinhas)-numBombas);
 
 
     if(auxAcabar==(numColunas*numLinhas)-numBombas){
