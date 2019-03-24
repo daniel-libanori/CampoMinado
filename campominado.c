@@ -820,13 +820,13 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
 
 
     if(proximaJogadaBot[0]==-1 && proximaJogadaBot[1]==-1){
-        srand(time(NULL));
+        //srand(time(NULL));
         auxSaida=0;
         while(auxSaida==0){
             proximaJogadaBot[0]=rand()%numColunas-1;
             proximaJogadaBot[1]=rand()%numLinhas-1;
             //if(matrizPossiveisJogadas[proximaJogadaBot[0]][proximaJogadaBot[1]]==1)
-            if(matrizGeral[proximaJogadaBot[0]][proximaJogadaBot[1]].selecionado==0)
+            if(matrizGeral[proximaJogadaBot[0]][proximaJogadaBot[1]].selecionado==0 && proximaJogadaBot[0]!=-1 && proximaJogadaBot[1]!=-1)
                 auxSaida=1;
 
         }
