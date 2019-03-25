@@ -41,14 +41,14 @@ void tempoEspera(int tempo){
 
 
 
-void testeDesenhaMatriz(struct itensDaMatriz **matrizGeral,int numLinhas, int numColunas){
+void testeDesenhaMatriz(struct itensDaMatriz **matrizGeral,int numLinhas, int numColunas, int outraMatriz[numColunas][numLinhas]){
 
     for(int i=0;i<numLinhas;i++){
         for(int j=0;j<numColunas;j++){
             if(j!=numColunas-1)
-                printf(" %d -",matrizGeral[i][j].numBombasProximas);
+                printf(" %d -",outraMatriz[i][j]);
             else
-                printf(" %d\n",matrizGeral[i][j].numBombasProximas);
+                printf(" %d\n",outraMatriz[i][j]);
 
         }
     }
@@ -565,13 +565,33 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
     proximaJogadaBot[0]=-1;//Caso nao consiga calcular com certeza a proxima jogada terei o valor -1
     proximaJogadaBot[1]=-1;
 
+    matrizPossiveisJogadas = (int**)malloc(numLinhas * sizeof(int*));
+        for(int i = 0; i < numLinhas; i++)
+            matrizPossiveisJogadas[i] = (int*)calloc(numColunas, sizeof(int));
+            
+    bombasCalculadasBot = (int**)malloc(numLinhas * sizeof(int*));
+        for(int i = 0; i < numLinhas; i++)
+            bombasCalculadasBot[i] = (int*)calloc(numColunas, sizeof(int));
+            
+    bombasCalculadasBot = (int**)malloc(numLinhas * sizeof(int*));
+        for(int i = 0; i < numLinhas; i++)
+            matrizPossiveisJogadas[i] = (int*)calloc(numColunas, sizeof(int));
+            
+    matrizPossiveisJogadas = (int**)malloc(numLinhas * sizeof(int*));
+        for(int i = 0; i < numLinhas; i++)
+            matrizPossiveisJogadas[i] = (int*)calloc(numColunas, sizeof(int));
+        
+    
+    
+    
     for(int i=0;i<numLinhas;i++) //inicializamatrizes
         for(int j=0;j<numColunas;j++){
             matrizPossiveisJogadas[i][j]=0;
             bombasCalculadasBot[i][j]=0;
             blocosNaoSelecionadosAoRedor[i][j]=0;
+            //numBombasJaCalculadasAoRedor[i][j]=0;
         }
-
+        printf("\nPassou1\n");
     for(int i=0;i<numLinhas;i++){
         for(int j=0;j<numColunas;j++){
 
@@ -593,7 +613,7 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
             if(j!=0 && i!=0)//Esquerda-Cima
                 condicaoMatrizPossiveisJogadas(matrizGeral,numLinhas,numColunas,matrizPossiveisJogadas,i,j,i-1,j-1);
 
-            if(j!=numColunas-1 && i!=numLinhas-1)//Direita-Baixo
+            if(j!=numColunas-1 && i!=numLinhas-1)//Direita-Baixo        printf("\nPassou\n");
                 condicaoMatrizPossiveisJogadas(matrizGeral,numLinhas,numColunas,matrizPossiveisJogadas,i,j,i+1,j+1);
 
             if(j!=0 && i!=numLinhas-1)//Esquerda-Baixo
@@ -601,10 +621,11 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
         }
     }
 
-
+        testeDesenhaMatriz(matrizGeral,numLinhas,numColunas,blocosNaoSelecionadosAoRedor);
+        printf("\nPassou2\n");
     for(int i=0;i<numLinhas;i++) //Conta os espaços nao selecionados ao redor
         for(int j=0;j<numColunas;j++){
-            if(matrizGeral[i][j].selecionado!=0 && matrizGeral[i][j].numBombasProximas!=0){
+            if(matrizGeral[i][j].selecionado!=0 && matrizGeral[i][j].numBombasProximas>0){
                 if(j!=numColunas-1)//Direita
                     if(matrizGeral[i][j+1].selecionado==0)
                         blocosNaoSelecionadosAoRedor[i][j]+=1;
@@ -651,8 +672,8 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
 
 
         }
-
-
+        testeDesenhaMatriz(matrizGeral,numLinhas,numColunas,blocosNaoSelecionadosAoRedor);
+        printf("\nPassou3\n");
     for(int i=0;i<numLinhas;i++) //Calcula lugares que certamente tem bomba
         for(int j=0;j<numColunas;j++){
             if(blocosNaoSelecionadosAoRedor[i][j]==matrizGeral[i][j].numBombasProximas){
@@ -691,42 +712,53 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
             }
 
         }
+        testeDesenhaMatriz(matrizGeral,numLinhas,numColunas,bombasCalculadasBot);
 
+        printf("\nPassou4\n");
     for(int i=0;i<numLinhas;i++) //verifica a quantidade de bombas ja calculada ao redor
         for(int j=0;j<numColunas;j++){
-            if(matrizGeral[i][j].selecionado!=0 && matrizGeral[i][j].numBombasProximas!=0){
+            printf("R");
+            if(matrizGeral[i][j].selecionado==1 && matrizGeral[i][j].numBombasProximas!=0){
                 if(j!=numColunas-1)//Direita
-                    if(bombasCalculadasBot[i][j+1]==1)
+                    if(bombasCalculadasBot[i][j+1]==1){
                         numBombasJaCalculadasAoRedor[i][j]+=1;
-
+                        printf("D");
+                    }
                 if(j!=0)//Esquerda
-                    if(bombasCalculadasBot[i][j-1]==1)
+                    if(bombasCalculadasBot[i][j-1]==1){
                         numBombasJaCalculadasAoRedor[i][j]+=1;
-
+                        printf("E");
+                    }
                 if(i!=numLinhas-1)//Baixo
-                    if(bombasCalculadasBot[i+1][j]==1)
+                    if(bombasCalculadasBot[i+1][j]==1){
                         numBombasJaCalculadasAoRedor[i][j]+=1;
-
+                        printf("B");
+                    }
                 if(i!=0)//Cima
-                    if(bombasCalculadasBot[i-1][j]==1)
+                    if(bombasCalculadasBot[i-1][j]==1){
                         numBombasJaCalculadasAoRedor[i][j]+=1;
-
+                        printf("C");
+                    }
                 if(j!=numColunas-1 && i!=0)//Direita-Cima
-                    if(bombasCalculadasBot[i-1][j+1]==1)
+                    if(bombasCalculadasBot[i-1][j+1]==1){
                         numBombasJaCalculadasAoRedor[i][j]+=1;
-
+                        printf("DC");
+                    }
                 if(j!=0 && i!=0)//Esquerda-Cima
-                    if(bombasCalculadasBot[i-1][j-1]==1)
+                    if(bombasCalculadasBot[i-1][j-1]==1){
                         numBombasJaCalculadasAoRedor[i][j]+=1;
-
+                        printf("EC");
+                    }
                 if(j!=numColunas-1 && i!=numLinhas-1)//Direita-Baixo
-                    if(bombasCalculadasBot[i+1][j+1]==1)
+                    if(bombasCalculadasBot[i+1][j+1]==1){
                         numBombasJaCalculadasAoRedor[i][j]+=1;
-
+                        printf("DB");
+                    }
                 if(j!=0 && i!=numLinhas-1)//Esquerda-Baixo
-                    if(bombasCalculadasBot[i+1][j-1]==1)
+                    if(bombasCalculadasBot[i+1][j-1]==1){
                         numBombasJaCalculadasAoRedor[i][j]+=1;
-
+                        printf("EB");
+                    }
 
 
 
@@ -741,13 +773,15 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
 
 
         }
-
+        printf("\nPassou5\n");
     for(int i=0;i<numLinhas;i++){ //define proximo alvo
+        printf("%d",i);
         for(int j=0;j<numColunas;j++){
             auxSaida=0;
             if(matrizGeral[i][j].selecionado!=0 && matrizGeral[i][j].numBombasProximas!=0 && numBombasJaCalculadasAoRedor[i][j]==matrizGeral[i][j].numBombasProximas){
                 if(j!=numColunas-1)//Direita
                     if(matrizGeral[i][j+1].selecionado!=1 && bombasCalculadasBot[i][j+1]!=1){
+                        printf("\nD\n");
                         proximaJogadaBot[0]=i;
                         proximaJogadaBot[1]=j+1;
                         auxSaida=1;
@@ -756,6 +790,7 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
 
                 if(j!=0)//Esquerda
                     if(matrizGeral[i][j-1].selecionado!=1 && bombasCalculadasBot[i][j-1]!=1){
+                        printf("\nE\n");
                         proximaJogadaBot[0]=i;
                         proximaJogadaBot[1]=j-1;
                         auxSaida=1;
@@ -764,6 +799,7 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
 
                 if(i!=numLinhas-1)//Baixo
                     if(matrizGeral[i+1][j].selecionado!=1 && bombasCalculadasBot[i+1][j]!=1){
+                        printf("\nB\n");
                         proximaJogadaBot[0]=i+1;
                         proximaJogadaBot[1]=j;
                         auxSaida=1;
@@ -772,6 +808,7 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
 
                 if(i!=0)//Cima
                     if(matrizGeral[i-1][j].selecionado!=1 && bombasCalculadasBot[i-1][j]!=1){
+                        printf("\nC\n");
                         proximaJogadaBot[0]=i-1;
                         proximaJogadaBot[1]=j;
                         auxSaida=1;
@@ -780,6 +817,7 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
 
                 if(j!=numColunas-1 && i!=0)//Direita-Cima
                     if(matrizGeral[i-1][j+1].selecionado!=1 && bombasCalculadasBot[i-1][j+1]!=1){
+                        printf("\nDC\n");
                         proximaJogadaBot[0]=i-1;
                         proximaJogadaBot[1]=j+1;
                         auxSaida=1;
@@ -788,6 +826,7 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
 
                 if(j!=0 && i!=0)//Esquerda-Cima
                     if(matrizGeral[i-1][j-1].selecionado!=1 && bombasCalculadasBot[i-1][j-1]!=1){
+                        printf("\nEC\n");
                         proximaJogadaBot[0]=i-1;
                         proximaJogadaBot[1]=j-1;
                         auxSaida=1;
@@ -796,6 +835,7 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
 
                 if(j!=numColunas-1 && i!=numLinhas-1)//Direita-Baixo
                     if(matrizGeral[i+1][j+1].selecionado!=1 && bombasCalculadasBot[i+1][j+1]!=1){
+                        printf("\nDB\n");
                         proximaJogadaBot[0]=i+1;
                         proximaJogadaBot[1]=j+1;
                         auxSaida=1;
@@ -804,6 +844,7 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
 
                 if(j!=0 && i!=numLinhas-1)//Esquerda-Baixo
                     if(matrizGeral[i+1][j-1].selecionado!=1 && bombasCalculadasBot[i+1][j-1]!=1){
+                        printf("\nEB\n");
                         proximaJogadaBot[0]=i+1;
                         proximaJogadaBot[1]=j-1;
                         auxSaida=1;
@@ -817,17 +858,24 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
         if(auxSaida==1)
             break;
     }//for i
-
-
+    int k=0;
+        printf("\nPassou6\n");
     if(proximaJogadaBot[0]==-1 && proximaJogadaBot[1]==-1){
         //srand(time(NULL));
         auxSaida=0;
         while(auxSaida==0){
-            proximaJogadaBot[0]=rand()%numColunas-1;
-            proximaJogadaBot[1]=rand()%numLinhas-1;
+            printf("%d",k);
+            k++;
+            proximaJogadaBot[0]=rand()%(numColunas-1);
+            proximaJogadaBot[1]=rand()%(numLinhas-1);
+            printf("Bacu");
             //if(matrizPossiveisJogadas[proximaJogadaBot[0]][proximaJogadaBot[1]]==1)
-            if(matrizGeral[proximaJogadaBot[0]][proximaJogadaBot[1]].selecionado==0 && proximaJogadaBot[0]!=-1 && proximaJogadaBot[1]!=-1)
+            if(matrizGeral[proximaJogadaBot[0]][proximaJogadaBot[1]].selecionado==0 && proximaJogadaBot[0]!=-1 && proximaJogadaBot[1]!=-1){
+                printf("xis");
                 auxSaida=1;
+            }
+
+
 
         }
 
