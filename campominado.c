@@ -41,7 +41,7 @@ void tempoEspera(int tempo){
 
 
 
-void testeDesenhaMatriz(struct itensDaMatriz **matrizGeral,int numLinhas, int numColunas, int outraMatriz[numColunas][numLinhas]){
+void testeDesenhaMatriz(struct itensDaMatriz **matrizGeral,int numLinhas, int numColunas, int** outraMatriz){
 
     for(int i=0;i<numLinhas;i++){
         for(int j=0;j<numColunas;j++){
@@ -77,6 +77,18 @@ void liberaAlocacaoMatriz(int **ponteiro, int tam){
 
 
 }
+
+void liberaAlocacaoMatrizStruct(struct itensDaMatriz **ponteiro, int tam){
+
+    for (int i=0;i<tam;i++)
+        free(ponteiro[i]);
+
+    free (ponteiro);
+
+
+}
+
+
 
 
 void inicializaValoresMatriz(struct itensDaMatriz **matrizGeral, int numLinhas, int numColunas){
@@ -348,9 +360,10 @@ void revelarZerosProximos(struct itensDaMatriz** matrizGeral, int numLinhas, int
 
 
         for (int i=0;i<numLinhas-1;i++){//cima-direita
-            for(int j=numColunas-1;j>0;j--){
+            for(int j=0; j<numColunas-1;j++/*numColunas-1;j>0;j--*/){
                 if(j!=numColunas-1 && i!=0)
                     if(matrizGeral[i][j].numBombasProximas==0 && matrizGeral[i][j].selecionado==1 && matrizGeral[i-1][j+1].selecionado==0){
+                        //printf("Entrou");
                         matrizGeral[i-1][j+1].selecionado=1;
                         sair=0;
                     }
@@ -431,7 +444,7 @@ void acaoJogo(struct itensDaMatriz** matrizGeral, int numLinhas, int numColunas,
                 posicaoAsterisco[0]--;
             break;
 printf("\n\n");
-    desenhaMatriz(matrizGeral,numLinhas,numColunas);
+    //desenhaMatriz(matrizGeral,numLinhas,numColunas);
         case 'S':
             if(posicaoAsterisco[0]!=numColunas-1)
                 posicaoAsterisco[0]++;
@@ -545,7 +558,7 @@ void desenhaMatriz(struct itensDaMatriz** matrizGeral, int numLinhas, int numCol
 }
 
 
-void condicaoMatrizPossiveisJogadas(struct itensDaMatriz** matrizGeral,int numLinhas,int numColunas, int matrizPossiveisJogadas[numColunas][numLinhas], int i, int j, int i2, int j2){
+void condicaoMatrizPossiveisJogadas(struct itensDaMatriz** matrizGeral,int numLinhas,int numColunas, int** matrizPossiveisJogadas, int i, int j, int i2, int j2){
 
     if(matrizGeral[i][j].selecionado==1 && matrizGeral[i][j].numBombasProximas!=0 && matrizGeral[i2][j2].selecionado==0)
                     matrizPossiveisJogadas[i2][j2]=1;
@@ -555,10 +568,10 @@ void condicaoMatrizPossiveisJogadas(struct itensDaMatriz** matrizGeral,int numLi
 
 
 
-void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogadaBot[2], int numLinhas, int numColunas){
+void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogadaBot[2], int numLinhas, int numColunas, int posicaoAsteristico[2]){
 
-    int matrizPossiveisJogadas[numColunas][numLinhas], bombasCalculadasBot[numColunas][numLinhas];
-    int blocosNaoSelecionadosAoRedor[numColunas][numLinhas], numBombasJaCalculadasAoRedor[numColunas][numLinhas];
+    int **matrizPossiveisJogadas, **bombasCalculadasBot;
+    int **blocosNaoSelecionadosAoRedor, **numBombasJaCalculadasAoRedor;
 
     int auxSaida=0;
 
@@ -568,28 +581,28 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
     matrizPossiveisJogadas = (int**)malloc(numLinhas * sizeof(int*));
         for(int i = 0; i < numLinhas; i++)
             matrizPossiveisJogadas[i] = (int*)calloc(numColunas, sizeof(int));
-            
+
     bombasCalculadasBot = (int**)malloc(numLinhas * sizeof(int*));
         for(int i = 0; i < numLinhas; i++)
             bombasCalculadasBot[i] = (int*)calloc(numColunas, sizeof(int));
-            
-    bombasCalculadasBot = (int**)malloc(numLinhas * sizeof(int*));
+
+    blocosNaoSelecionadosAoRedor = (int**)malloc(numLinhas * sizeof(int*));
         for(int i = 0; i < numLinhas; i++)
-            matrizPossiveisJogadas[i] = (int*)calloc(numColunas, sizeof(int));
-            
-    matrizPossiveisJogadas = (int**)malloc(numLinhas * sizeof(int*));
+            blocosNaoSelecionadosAoRedor[i] = (int*)calloc(numColunas, sizeof(int));
+
+    numBombasJaCalculadasAoRedor = (int**)malloc(numLinhas * sizeof(int*));
         for(int i = 0; i < numLinhas; i++)
-            matrizPossiveisJogadas[i] = (int*)calloc(numColunas, sizeof(int));
-        
-    
-    
-    
+            numBombasJaCalculadasAoRedor[i] = (int*)calloc(numColunas, sizeof(int));
+
+
+
+
     for(int i=0;i<numLinhas;i++) //inicializamatrizes
         for(int j=0;j<numColunas;j++){
             matrizPossiveisJogadas[i][j]=0;
             bombasCalculadasBot[i][j]=0;
             blocosNaoSelecionadosAoRedor[i][j]=0;
-            //numBombasJaCalculadasAoRedor[i][j]=0;
+            numBombasJaCalculadasAoRedor[i][j]=0;
         }
         printf("\nPassou1\n");
     for(int i=0;i<numLinhas;i++){
@@ -621,11 +634,11 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
         }
     }
 
-        testeDesenhaMatriz(matrizGeral,numLinhas,numColunas,blocosNaoSelecionadosAoRedor);
+        testeDesenhaMatriz(matrizGeral,numLinhas,numColunas,bombasCalculadasBot);
         printf("\nPassou2\n");
     for(int i=0;i<numLinhas;i++) //Conta os espaços nao selecionados ao redor
         for(int j=0;j<numColunas;j++){
-            if(matrizGeral[i][j].selecionado!=0 && matrizGeral[i][j].numBombasProximas>0){
+            if(matrizGeral[i][j].selecionado!=0 && matrizGeral[i][j].numBombasProximas!=0){
                 if(j!=numColunas-1)//Direita
                     if(matrizGeral[i][j+1].selecionado==0)
                         blocosNaoSelecionadosAoRedor[i][j]+=1;
@@ -676,7 +689,7 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
         printf("\nPassou3\n");
     for(int i=0;i<numLinhas;i++) //Calcula lugares que certamente tem bomba
         for(int j=0;j<numColunas;j++){
-            if(blocosNaoSelecionadosAoRedor[i][j]==matrizGeral[i][j].numBombasProximas){
+            if(blocosNaoSelecionadosAoRedor[i][j]!=0 && blocosNaoSelecionadosAoRedor[i][j]==matrizGeral[i][j].numBombasProximas){
                 if(j!=numColunas-1)//Direita
                     if(matrizGeral[i][j+1].selecionado==0)
                         bombasCalculadasBot[i][j+1]=1;
@@ -866,8 +879,8 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
         while(auxSaida==0){
             printf("%d",k);
             k++;
-            proximaJogadaBot[0]=rand()%(numColunas-1);
-            proximaJogadaBot[1]=rand()%(numLinhas-1);
+            proximaJogadaBot[1]=rand()%(numColunas-1);
+            proximaJogadaBot[0]=rand()%(numLinhas-1);
             printf("Bacu");
             //if(matrizPossiveisJogadas[proximaJogadaBot[0]][proximaJogadaBot[1]]==1)
             if(matrizGeral[proximaJogadaBot[0]][proximaJogadaBot[1]].selecionado==0 && proximaJogadaBot[0]!=-1 && proximaJogadaBot[1]!=-1){
@@ -910,9 +923,15 @@ void analisarProbabilidades(struct itensDaMatriz** matrizGeral, int proximaJogad
         }
     }*/
 
+     //int matrizPossiveisJogadas[numColunas][numLinhas], bombasCalculadasBot[numColunas][numLinhas];
+    //int blocosNaoSelecionadosAoRedor[numColunas][numLinhas], numBombasJaCalculadasAoRedor[numColunas][numLinhas];
 
 
 
+    liberaAlocacaoMatriz(matrizPossiveisJogadas,numLinhas);
+    liberaAlocacaoMatriz(bombasCalculadasBot,numLinhas);
+    liberaAlocacaoMatriz(blocosNaoSelecionadosAoRedor,numLinhas);
+    liberaAlocacaoMatriz(numBombasJaCalculadasAoRedor,numLinhas);
 
 
 
@@ -1033,6 +1052,7 @@ void interfaceComputador(struct itensDaMatriz** matrizGeral, int numLinhas, int 
     int auxAcabar;
     char acao;
 
+
     limpaTela();
 
     if(*primeiraJogadaBot==1){
@@ -1053,7 +1073,7 @@ void interfaceComputador(struct itensDaMatriz** matrizGeral, int numLinhas, int 
 
     desenhaMatriz(matrizGeral,numLinhas,numColunas,&auxAcabar);
 
-    //fflush(stdin);
+
 
     if(auxAcabar==(numLinhas*numColunas)-numBombas){//se todas as posiçoes foram selecionadas menos as bombas ele ganha
         *acabarJogo=1;
@@ -1066,8 +1086,9 @@ void interfaceComputador(struct itensDaMatriz** matrizGeral, int numLinhas, int 
 
 
 
-    if(proximaJogadaBot[0]==posicaoAsteristico[0] && proximaJogadaBot[1]==posicaoAsteristico[1])
+    if(proximaJogadaBot[0]==posicaoAsteristico[0] && proximaJogadaBot[1]==posicaoAsteristico[1]){
         acao='e';
+    }
     else
         acao = movimentoComputador(proximaJogadaBot,posicaoAsteristico);
 
@@ -1079,7 +1100,7 @@ void interfaceComputador(struct itensDaMatriz** matrizGeral, int numLinhas, int 
     tempoEspera(1);
 
     if(matrizGeral[proximaJogadaBot[0]][proximaJogadaBot[1]].selecionado==1)
-        analisarProbabilidades(matrizGeral,proximaJogadaBot,numLinhas,numColunas);
+        analisarProbabilidades(matrizGeral,proximaJogadaBot,numLinhas,numColunas,posicaoAsteristico);
 
 
     for (int i=0;i<numLinhas;i++){ //conta a quantidade de posicoes selecionadas
@@ -1124,7 +1145,7 @@ void main(){
         for(int i = 0; i < numLinhas; i++){
             matrizGeral[i] = (struct itensDaMatriz*)calloc(numColunas, sizeof(struct itensDaMatriz));
         }
-        faltaDeMemoria(matrizGeral);
+        //faltaDeMemoria(matrizGeral);
         inicializaValoresMatriz(matrizGeral,numLinhas,numColunas);
 
         colocarBombas(matrizGeral,numBombas,numLinhas,numColunas);
@@ -1144,7 +1165,7 @@ void main(){
         else if(acabarJogo==2)
             printf("\n\nVoce Perdeu");
 
-        tempoEspera(2);
+        tempoEspera(5);
         limpaTela();
         printf("\n\nDeseja jogar novamente? (1-Sim / 0-Nao)\nR: ");
         scanf("%d", &jogarDeNovo);
@@ -1152,7 +1173,7 @@ void main(){
         posicaoAsteristico[0]=0;
         posicaoAsteristico[1]=0;
 
-        liberaAlocacaoMatriz (matrizGeral, numLinhas);
+        liberaAlocacaoMatrizStruct(matrizGeral, numLinhas);
     }
 
 }
