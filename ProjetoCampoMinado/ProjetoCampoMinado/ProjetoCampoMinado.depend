@@ -1,0 +1,57 @@
+# depslib dependency file v1.0
+1553652383 source:d:\programação\sistemas de informação\lab2\projetocampominado\projetocampominado\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	<unistd.h>
+	<conio.h>
+	"funcoesAuxiliares.h"
+	"interfaces.h"
+	"inicializacao.h"
+	"jogando.h"
+
+1553651092 source:d:\programação\sistemas de informação\lab2\projetocampominado\projetocampominado\jogando.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	<unistd.h>
+	<conio.h>
+	"funcoesAuxiliares.h"
+
+1553651103 source:d:\programação\sistemas de informação\lab2\projetocampominado\projetocampominado\interfaces.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	<unistd.h>
+	<conio.h>
+	"jogando.h"
+	"funcoesAuxiliares.h"
+
+1553651005 source:d:\programação\sistemas de informação\lab2\projetocampominado\projetocampominado\funcoesauxiliares.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	<unistd.h>
+	<conio.h>
+
+1553650219 d:\programação\sistemas de informação\lab2\projetocampominado\projetocampominado\funcoesauxiliares.h
+
+1553647488 d:\programação\sistemas de informação\lab2\projetocampominado\projetocampominado\interfaces.h
+
+1553648691 d:\programação\sistemas de informação\lab2\projetocampominado\projetocampominado\inicializacao.h
+
+1553647488 d:\programação\sistemas de informação\lab2\projetocampominado\projetocampominado\jogando.h
+
+1553651098 source:d:\programação\sistemas de informação\lab2\projetocampominado\projetocampominado\inicializacao.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	<unistd.h>
+	<conio.h>
+	"funcoesAuxiliares.h"
+
