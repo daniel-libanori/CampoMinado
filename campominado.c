@@ -38,7 +38,35 @@ void tempoEspera(int tempo){
 }
 
 
+void aberturaJogo(){
+    limpaTela();
 
+    printf("\n\n\tCampo Minado (By:Daniel Libanori)\n");
+    printf("\n\n");
+    printf("\t\t\t-----------    ---------    -----         -----  ----------   -------------\n");
+    printf("\t\t\t|         |   /   ___   \\   |    \\       /    |  |   ----  \\  |  -------  |\n");
+    printf("\t\t\t|    ------  /   /   \\   \\  |     \\     /     |  |   |   |  | |  |     |  |\n");
+    printf("\t\t\t|   |        |   |   |   |  |      \\   /      |  |   ----  /  |  |     |  |\n");
+    printf("\t\t\t|   |	     |   -----   |  |   |\\  ---  /|   |  |   -----    |  |     |  |\n");
+    printf("\t\t\t|   |        |   -----   |  |   | \\     / |   |  |   |        |  |     |  |\n");
+    printf("\t\t\t|    ------  |   |   |   |  |   |  \\   /  |   |  |   |        |  |     |  |\n");
+    printf("\t\t\t|         |  |	 |   |   |  |   |   ---   |   |  |   |        |  -------  |\n");
+    printf("\t\t\t-----------  -----   -----  -----         -----  -----        -------------\n\n\n");
+
+    printf("\t\t-----         -----  -----  -----    -----    ---------    -----------     -------------\n");
+    printf("\t\t|    \\       /    |  |   |  |    \\   |   |   /   ___   \\   |  ------  \\    |  -------  |\n");
+    printf("\t\t|     \\     /     |  |   |  |     \\  |   |  /   /   \\   \\  |  |     \\  \\   |  |     |  |\n");
+    printf("\t\t|      \\   /      |  |   |  |      \\ |   |  |   |   |   |  |  |      |  |  |  |     |  |\n");
+    printf("\t\t|   |\\  ---  /|   |  |   |  |   |\\  \\|   |  |   -----   |  |  |      |  |  |  |     |  |\n");
+    printf("\t\t|   | \\     / |   |  |   |  |   | \\      |  |   -----   |  |  |      |  |  |  |     |  |\n");
+    printf("\t\t|   |  \\   /  |   |  |   |  |   |  \\     |  |   |   |   |  |  |     /  /   |  |     |  |\n");
+    printf("\t\t|   |   ---   |   |  |   |  |   |   \\    |  |	|   |   |  |  ------  /    |  -------  |\n");
+    printf("\t\t-----         -----  -----  -----    -----  -----   -----  -----------     -------------\n");
+
+
+    printf("\n\n\t\t\t\t\t\tPressione Enter para Comecar");
+    getch();
+}
 
 
 void testeDesenhaMatriz(struct itensDaMatriz **matrizGeral,int numLinhas, int numColunas){
@@ -116,34 +144,36 @@ void inicio(int *numBombas, int *numLinhas, int *numColunas, int *jogadorOuBot){
     int ok=0;
     int aux1,aux2;
 
+    limpaTela();
 
+    printf("\n\n\tCampo Minado (By:Daniel Libanori)\n\n");
     while(ok==0){
-        printf("Defina o jogador (1 - Voce    2- Computador): ");
+        printf("\tDefina o jogador (1 - Voce    2- Computador): ");
         scanf("%d", jogadorOuBot);
         ok=1;
         if(*jogadorOuBot != 1 && *jogadorOuBot != 2){
-            printf("\nDigite um valor valido.\n");
+            printf("\n\tDigite um valor valido.\n");
             ok=0;
         }
     }
     ok=0;
     while(ok==0){
-        printf("Defina o numero de colunas da matriz: ");
+        printf("\tDefina o numero de colunas da matriz: ");
         scanf("%d", numColunas);
         ok=1;
         if(*numColunas<0){
-            printf("\nDigite um valor valido.\n");
+            printf("\n\tDigite um valor valido.\n");
             ok=0;
         }
     }
 
     ok=0;
     while(ok==0){
-        printf("Defina o numero de linhas da matriz: ");
+        printf("\tDefina o numero de linhas da matriz: ");
         scanf("%d", numLinhas);
         ok=1;
         if(*numLinhas<0){
-            printf("\nDigite um valor valido.\n");
+            printf("\n\tDigite um valor valido.\n");
             ok=0;
         }
     }
@@ -152,15 +182,15 @@ void inicio(int *numBombas, int *numLinhas, int *numColunas, int *jogadorOuBot){
 
     ok=0;
     while(ok==0){
-        printf("Defina o numero de bombas do jogo: ");
+        printf("\tDefina o numero de bombas do jogo: ");
         scanf("%d", numBombas);
         ok=1;
         if(*numBombas<0){
-            printf("\nDigite um valor valido.\n");
+            printf("\n\tDigite um valor valido.\n");
             ok=0;
         }
         else if(*numBombas>(*numLinhas)*(*numColunas)){
-            printf("\nValor digitado ultrapassa o total de espaços da matriz. Digite outro.\n");
+            printf("\n\tValor digitado ultrapassa o total de espaços da matriz. Digite outro.\n");
             ok=0;
         }
     }
@@ -998,6 +1028,7 @@ void interface(struct itensDaMatriz** matrizGeral, int numLinhas, int numColunas
 
     atualizaBandeiras(matrizGeral,numLinhas,numColunas,bombasNaoMarcadas,numBombas);
 
+    printf("\n\n\tCampo Minado (By:Daniel Libanori)\n");
     printf("\n\tTeclas:\n\n");
     printf("\tW - Cima\t\t\tE - Seleciona\n");
     printf("\tS - Baixo\t\t\tQ - Coloca Bandeira\n");
@@ -1018,12 +1049,12 @@ void interface(struct itensDaMatriz** matrizGeral, int numLinhas, int numColunas
         return;
     }
 
-   testeDesenhaMatriz(matrizGeral,numLinhas,numColunas);
+   //testeDesenhaMatriz(matrizGeral,numLinhas,numColunas);
 
 
 
 
-    printf("\n\n\tDigite sua acao: ");
+    printf("\n\n\n\tDigite sua acao: ");
     lerChar(&acao);
 
     acaoJogo(matrizGeral,numLinhas,numColunas,acao,posicaoAsterisco,numBombas,bombasNaoMarcadas);
@@ -1090,14 +1121,13 @@ void interfaceComputador(struct itensDaMatriz** matrizGeral, int numLinhas, int 
                 bombasCalculadasBot[i][j]=0;
 
     }
-
+    printf("\n\n\tCampo Minado (By:Daniel Libanori)\n");
     printf("\n\tPlayer: Computador\n\n");
     printf("\tPosicao Asterisco: (%d, %d)\n", posicaoAsterisco[0],posicaoAsterisco[1]);
     printf("\tNumero de Bombas: %d\n", *bombasNaoMarcadas);
     printf("\tProximo Alvo: (%d, %d)\n", proximaJogadaBot[0],proximaJogadaBot[1]);
     printf("\t\n");
     printf("\t\n");
-    printf("\t\n\n");
 
     desenhaMatriz(matrizGeral,numLinhas,numColunas,&auxAcabar);
 
@@ -1169,7 +1199,10 @@ void main(){
     clock_t inicio_tempo, fim_tempo;
 
 
+
     while(jogarDeNovo==1){
+        aberturaJogo();
+
         inicio(&numBombas, &numLinhas, &numColunas,&jogadorOuBot);
         primeiraJogadaBot=1;
         bombasNaoMarcadas=numBombas;
@@ -1196,16 +1229,16 @@ void main(){
 
         fim_tempo = clock();
 
-        printf("\tTempo de jogo: %.2f segundos\n", (double)(fim_tempo-inicio_tempo)/CLOCKS_PER_SEC);
 
-        tempoEspera(4);
+
+        tempoEspera(3);
         limpaTela();
-
+        printf("\n\n\tCampo Minado (By:Daniel Libanori)\n\n");
         if(acabarJogo==1)
-            printf("\n\tVoce Ganhou");
+            printf("\tVoce Ganhou!");
         else if(acabarJogo==2)
-            printf("\n\tVoce Perdeu");
-
+            printf("\tVoce Perdeu.");
+         printf("\n\tTempo de jogo: %.2f segundos\n", (double)(fim_tempo-inicio_tempo)/CLOCKS_PER_SEC);
 
 
         printf("\n\n\tDeseja jogar novamente? (1-Sim / 0-Nao)\n\tR: ");
