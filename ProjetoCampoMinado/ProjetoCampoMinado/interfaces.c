@@ -3,7 +3,7 @@
 #include <time.h>
 #include <string.h>
 #include <unistd.h>
-#include <conio.h>
+//#include <conio.h>
 
 #include "jogando.h"
 #include "funcoesAuxiliares.h"
@@ -93,7 +93,7 @@ void aberturaJogo(){
 
 
     printf("\n\n\t\t\t\t\t\tPressione Enter para Comecar");
-    getch();
+    //getch();
 }
 
 void interface(struct itensDaMatriz** matrizGeral, int numLinhas, int numColunas, int posicaoAsterisco[2],int *acabarJogo, int numBombas, int *bombasNaoMarcadas){

@@ -3,7 +3,7 @@
 #include <time.h>
 #include <string.h>
 #include <unistd.h>
-#include <conio.h>
+//#include <conio.h>
 
 #include "funcoesAuxiliares.h"
 #include "interfaces.h"

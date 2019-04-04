@@ -3,7 +3,7 @@
 #include <time.h>
 #include <string.h>
 #include <unistd.h>
-#include <conio.h>
+//#include <conio.h>
 
 
 struct itensDaMatriz{
@@ -19,15 +19,15 @@ struct itensDaMatriz{
 
 
 void limpaTela(){
-    system("cls");
-    //system("clear");
+    //system("cls");
+    system("clear");
 
 }
 
 void lerChar(char *caracter){
-    //scanf("%c",caracter);
+    scanf("%c",caracter);
     //*caracter=getchar();
-    *caracter=getch();
+    //*caracter=getch();
 
 }
 
